@@ -2,7 +2,6 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  text-align: center;
 }
 
 body {
@@ -29,4 +28,14 @@ ul {
 a {
   color: #fff;
   text-transform: uppercase;
+  text-decoration: none;
+}
+
+a:hover {
+  color: rgb(192, 223, 56);
+}
+
+a:focus {
+  font-weight: 500;
+  color: rgb(192, 223, 56);
 }

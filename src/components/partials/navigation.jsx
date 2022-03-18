@@ -1,64 +1,54 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import {
-  Link,
-  useParams,
-  useRouteMatch,
-  Switch,
-  Route,
-} from 'react-router-dom';
+import { NavLink, useRouteMatch } from 'react-router-dom';
 import { selectors } from '../../redux';
+
+import '../../css/navigation.css';
 
 const Navigation = () => {
   const categories = useSelector(selectors.getCategories);
   let { url } = useRouteMatch();
-  let { id } = useParams();
-  console.log({ id });
-  console.log({ url });
+
   const renderCategories = (categories) => {
-    return categories.map((category) => {
-      const hasSubCategory = category.subcategories ? true : false;
+    return categories.map(({ id, level, subcategories, name }) => {
+      const hasSubCategory = subcategories ? true : false;
       return (
-        <div>
-          <li key={category.id}>
-            <Link
-              to={`${url}${category.id}`}
-              className={`${
-                category.level === 1
-                  ? 'pl-2'
-                  : category.level === 2
-                  ? 'pl-3'
-                  : 'pl-5'
-              }`}
+        <div key={id}>
+          <li>
+            <NavLink
+              to={`${url}category/${id}`}
+              className={`${level === 1 ? '' : level === 2 ? 'pl-4' : 'pl-5'}`}
             >
-              {category.name}
-            </Link>
+              {name}
+            </NavLink>
           </li>
-          {hasSubCategory && renderCategories(category.subcategories)}
+          {hasSubCategory && renderCategories(subcategories)}
         </div>
       );
     });
   };
 
   return (
-    <>
+    <nav className='nav'>
       <ul>
-        <div>
-          <li className=' pl-2'>
-            <Link to='/new-user'>new user</Link>
-          </li>
-          <li className='pl-2'>
-            <Link to='/new-category'>new category</Link>
-          </li>
-        </div>
-        {renderCategories(categories)}
+        <li>
+          <NavLink className='' to='/categories'>
+            Categories
+          </NavLink>
+        </li>
+        <li>
+          <NavLink className='' to='/user/new'>
+            new user
+          </NavLink>
+        </li>
+        {/* <li>
+          <NavLink className='' activeClassName='active' to='/category/new'>
+            new category
+          </NavLink>
+        </li> */}
+        <div>{renderCategories(categories)}</div>
       </ul>
-      <Switch>
-        <Route path={`${url}:id`}>
-          <Navigation />
-        </Route>
-      </Switch>
-    </>
+    </nav>
   );
 };
 

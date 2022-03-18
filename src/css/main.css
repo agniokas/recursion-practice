@@ -1,0 +1,16 @@
+.block {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid rgb(189, 189, 189);
+  border-radius: 8px;
+  background-color: transparent;
+}
+
+.card-group {
+  display: flex;
+  justify-content: space-around;
+}
+
+.card-group-item {
+  padding-right: 1rem;
+}
